@@ -13,12 +13,19 @@ DATA_FILE_NAME = "shape_predictor_68_face_landmarks.dat"
 
 # Function to add CMake to PATH if not already present
 def add_cmake_to_path():
-    cmake_path = "/usr/bin/cmake"  # Set the path for CMake
-    if os.path.exists(cmake_path):
-        os.environ["PATH"] += os.pathsep + os.path.dirname(cmake_path)
-        print("Added CMake to PATH.")
-    else:
-        print("CMake executable not found at the specified path.")
+    try:
+        # Attempt to find CMake using 'which'
+        result = subprocess.run(["which", "cmake"], capture_output=True, text=True, check=True)
+        cmake_path = result.stdout.strip()
+        if cmake_path and os.path.exists(cmake_path):
+            os.environ["PATH"] += os.pathsep + os.path.dirname(cmake_path)
+            print(f"Added CMake to PATH: {cmake_path}")
+        else:
+            print("CMake executable not found. Please install CMake using 'sudo apt install cmake'.")
+            sys.exit(1)
+    except subprocess.CalledProcessError:
+        print("CMake not found. Please install CMake using 'sudo apt install cmake'.")
+        sys.exit(1)
 
 # Function to check if the .dat file is present and download if missing
 def check_and_download_file():
