@@ -7,6 +7,14 @@ import numpy as np
 from fer import FER  # Using FER library for faster emotion detection
 import subprocess
 
+# Activate the Pipenv virtual environment
+try:
+    subprocess.run(["pipenv", "shell"], check=True)
+    print("Pipenv virtual environment activated.")
+except subprocess.CalledProcessError as e:
+    print(f"Failed to activate Pipenv virtual environment. Error: {e}")
+    sys.exit(1)
+
 # Specify the URL of the .dat file and the file name
 DATA_FILE_URL = "https://github.com/italojs/facial-landmarks-recognition/blob/master/shape_predictor_68_face_landmarks.dat"
 DATA_FILE_NAME = "shape_predictor_68_face_landmarks.dat"
