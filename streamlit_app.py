@@ -11,15 +11,6 @@ import subprocess
 DATA_FILE_URL = "https://github.com/italojs/facial-landmarks-recognition/blob/master/shape_predictor_68_face_landmarks.dat"
 DATA_FILE_NAME = "shape_predictor_68_face_landmarks.dat"
 
-# Function to add CMake to PATH if not already present
-def add_cmake_to_path():
-    cmake_path = "/usr/local/bin/cmake"  # Update this path as needed
-    if os.path.exists(cmake_path):
-        os.environ["PATH"] += os.pathsep + os.path.dirname(cmake_path)
-        print("Added CMake to PATH.")
-    else:
-        print("CMake executable not found at the specified path.")
-
 # Function to check if the .dat file is present and download if missing
 def check_and_download_file():
     if not os.path.exists(DATA_FILE_NAME):
