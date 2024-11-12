@@ -7,11 +7,10 @@ import numpy as np
 from fer import FER  # Using FER library for faster emotion detection
 import subprocess
 
-# Specify the URL of the .dat file and the file name
-DATA_FILE_URL = "http://example.com/example.dat"
-DATA_FILE_NAME = "example.dat"
+DATA_FILE_URL = "https://github.com/italojs/facial-landmarks-recognition/blob/master/shape_predictor_68_face_landmarks.dat"
+DATA_FILE_NAME = "shape_predictor_68_face_landmarks.dat"
 
-# Function to check if CMake is installed and install it if missing
+# Function to check if CMake is installed and install if missing
 def check_and_install_cmake():
     try:
         subprocess.run(["cmake", "--version"], check=True)
@@ -23,7 +22,7 @@ def check_and_install_cmake():
             subprocess.run(["sudo", "apt", "install", "-y", "cmake"], check=True)
             print("CMake installed successfully.")
         except Exception as e:
-            print(f"Failed to install CMake. Error: {e}")
+            print(f"Failed to install CMake. Please install it manually. Error: {e}")
             sys.exit(1)
 
 # Function to check if the .dat file is present and download if missing
