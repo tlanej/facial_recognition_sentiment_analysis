@@ -7,23 +7,18 @@ import numpy as np
 from fer import FER  # Using FER library for faster emotion detection
 import subprocess
 
+# Specify the URL of the .dat file and the file name
 DATA_FILE_URL = "https://github.com/italojs/facial-landmarks-recognition/blob/master/shape_predictor_68_face_landmarks.dat"
 DATA_FILE_NAME = "shape_predictor_68_face_landmarks.dat"
 
-# Function to check if CMake is installed and install if missing
-def check_and_install_cmake():
-    try:
-        subprocess.run(["cmake", "--version"], check=True)
-        print("CMake is already installed.")
-    except subprocess.CalledProcessError:
-        print("CMake is not installed. Installing CMake...")
-        try:
-            subprocess.run(["sudo", "apt", "update"], check=True)
-            subprocess.run(["sudo", "apt", "install", "-y", "cmake"], check=True)
-            print("CMake installed successfully.")
-        except Exception as e:
-            print(f"Failed to install CMake. Please install it manually. Error: {e}")
-            sys.exit(1)
+# Function to add CMake to PATH if not already present
+def add_cmake_to_path():
+    cmake_path = "/usr/local/bin/cmake"  # Update this path as needed
+    if os.path.exists(cmake_path):
+        os.environ["PATH"] += os.pathsep + os.path.dirname(cmake_path)
+        print("Added CMake to PATH.")
+    else:
+        print("CMake executable not found at the specified path.")
 
 # Function to check if the .dat file is present and download if missing
 def check_and_download_file():
@@ -47,9 +42,9 @@ emotion_detector = FER(mtcnn=True)
 
 # Streamlit app
 def main():
-    # Step 1: Check if CMake is installed, if not install it
-    check_and_install_cmake()
-    
+    # Step 1: Add CMake to PATH if not already present
+    add_cmake_to_path()
+
     # Step 2: Check if the .dat file is available, if not download it
     check_and_download_file()
 
