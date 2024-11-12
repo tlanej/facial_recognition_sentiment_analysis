@@ -11,22 +11,6 @@ import subprocess
 DATA_FILE_URL = "https://github.com/italojs/facial-landmarks-recognition/blob/master/shape_predictor_68_face_landmarks.dat"
 DATA_FILE_NAME = "shape_predictor_68_face_landmarks.dat"
 
-# Function to add CMake to PATH if not already present
-def add_cmake_to_path():
-    try:
-        # Attempt to find CMake using 'which'
-        result = subprocess.run(["which", "cmake"], capture_output=True, text=True, check=True)
-        cmake_path = result.stdout.strip()
-        if cmake_path and os.path.exists(cmake_path):
-            os.environ["PATH"] += os.pathsep + os.path.dirname(cmake_path)
-            print(f"Added CMake to PATH: {cmake_path}")
-        else:
-            print("CMake executable not found. Please install CMake using 'sudo apt install cmake'.")
-            sys.exit(1)
-    except subprocess.CalledProcessError:
-        print("CMake not found. Please install CMake using 'sudo apt install cmake'.")
-        sys.exit(1)
-
 # Function to check if the .dat file is present and download if missing
 def check_and_download_file():
     if not os.path.exists(DATA_FILE_NAME):
@@ -49,10 +33,7 @@ emotion_detector = FER(mtcnn=True)
 
 # Streamlit app
 def main():
-    # Step 1: Add CMake to PATH if not already present
-    add_cmake_to_path()
-
-    # Step 2: Check if the .dat file is available, if not download it
+    # Step 1: Check if the .dat file is available, if not download it
     check_and_download_file()
 
     st.title("Facial Recognition and Sentiment Analysis App")
